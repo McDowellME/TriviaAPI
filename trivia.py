@@ -6,6 +6,7 @@
 
 import requests
 import random
+from html import unescape
 
 # URL builder
 BASE_URL = "https://opentdb.com/"
@@ -60,7 +61,7 @@ def createGame():
             # for each, print the id and category name
             ids = []
             for cat in trivia_categories:                
-                print("[", cat["id"], "] ", cat["name"])
+                print("[", cat["id"], "] ", unescape(cat["name"]))
                 ids.append(int(cat["id"]))
 
             category = 0
@@ -124,11 +125,14 @@ def playGame(url):
     # for each question object
     for qobj in questions:
         # define values
-        question = qobj["question"]
-        correct_answer = qobj["correct_answer"]
+        question = unescape(qobj["question"])        
+        correct_answer = unescape(qobj["correct_answer"])        
         incorrect_answers = qobj["incorrect_answers"]
-        answers = incorrect_answers # list
-        answers.append(correct_answer)
+        # create list and append correct and incorrect
+        answers = []
+        answers.append(correct_answer)        
+        for inc_ans in incorrect_answers:            
+            answers.append(unescape(inc_ans))        
         random.shuffle(answers)
 
         print()
