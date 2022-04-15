@@ -130,9 +130,8 @@ def playGame(url):
         incorrect_answers = qobj["incorrect_answers"]
         # create list and append correct and incorrect
         answers = []
-        answers.append(correct_answer)        
-        for inc_ans in incorrect_answers:            
-            answers.append(unescape(inc_ans))        
+        answers.append(correct_answer)
+        answers.extend(incorrect_answers)        
         random.shuffle(answers)
 
         print()
